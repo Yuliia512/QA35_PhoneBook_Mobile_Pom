@@ -9,8 +9,7 @@ public class AddNewContactScreen extends BaseScreen{
         super(driver);
     }
 
-    @FindBy(xpath = "//*[@resource-id = 'com.sheygam.contactapp:id/add_contact_btn']")
-    AndroidElement addContactButton;
+
 
     @FindBy(xpath = "//*[@resource-id = 'com.sheygam.contactapp:id/inputName']")
     AndroidElement editTextName;

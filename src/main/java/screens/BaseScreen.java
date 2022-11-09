@@ -35,4 +35,9 @@ if(text !=null){
         new WebDriverWait(driver,time)
                 .until(ExpectedConditions.visibilityOf(element));
     }
+
+    public boolean isShouldHave(AndroidElement element,String text, int time){
+    return new WebDriverWait(driver,time)
+        .until(ExpectedConditions.textToBePresentInElement(element,text));
+    }
 }
