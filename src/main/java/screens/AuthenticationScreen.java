@@ -3,7 +3,10 @@ package screens;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import models.Auth;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class AuthenticationScreen extends BaseScreen{
@@ -29,6 +32,12 @@ public class AuthenticationScreen extends BaseScreen{
 
     @FindBy(id = "android:id/button1")
     AndroidElement okErrorButton;
+
+    @FindBy (id = "android:id/alertTitle")
+    AndroidElement alertTitle;
+
+    @FindBy (id= "android:id/message")
+    AndroidElement errorTextView;
 
     public AuthenticationScreen okButtonError(){
         okErrorButton.click();
@@ -56,6 +65,10 @@ public class AuthenticationScreen extends BaseScreen{
         registrationButton.click();
         return new ContactListScreen(driver);
     }
+    public AuthenticationScreen submitRegNegative(){
+        registrationButton.click();
+        return this;
+    }
     public ContactListScreen login(Auth auth) {
         should(editTextEmail,5);
         type(editTextEmail, auth.getEmail());
@@ -72,5 +85,38 @@ public class AuthenticationScreen extends BaseScreen{
         return new ContactListScreen(driver);
     }
 
+    public AuthenticationScreen registrationUnsuccessful(Auth auth) {
+        should(editTextEmail,10);
+        type(editTextEmail, auth.getEmail());
+        type(editTextPassword, auth.getPassword());
+        registrationButton.click();
+        return this;
+    }
 
+
+    public AuthenticationScreen isErrorMessageContainsText(String text) {
+        pause(5000);
+        Assert.assertTrue(errorTextView.getText().contains(text));
+        okErrorButton.click();
+
+        return this;
+    }
+
+    public AuthenticationScreen isErrorMessageContainsTextInAlert(String text) {
+        Alert alert = new WebDriverWait(driver,5)
+                .until(ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert();
+        System.out.println(alert.getText());
+        Assert.assertTrue(alert.getText().contains(text));
+        alert.accept();
+        return this;
+    }
+
+    public AuthenticationScreen loginUnsuccessful(Auth auth) {
+        should(editTextEmail,5);
+        type(editTextEmail, auth.getEmail());
+        type(editTextPassword, auth.getPassword());
+        loginButton.click();
+        return this;
+    }
 }

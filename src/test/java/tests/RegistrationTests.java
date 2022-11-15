@@ -36,14 +36,22 @@ public class RegistrationTests extends AppiumConfig {
     }
 
     @Test
-    public void registrationWrongEmailModel() {
+    public void registrationNegativeWrongEmail() {
 
         new AuthenticationScreen(driver)
-                .registration(Auth.builder().email("citygmail.com").password("Cc12345$").build())
-                .assertIsAlertPresent()
-                .okButtonError();
+                .fillEmail("citygmail@com")
+                .fillPassword("CC12345!")
+                .submitRegNegative()
+                .isErrorMessageContainsText("Can contain special characters");
+
 
     }
+    @Test
+    public void registrationNegativeWrongPassword(){
 
+        new AuthenticationScreen(driver)
+                .registrationUnsuccessful(Auth.builder().email("city@gmail.com").password("Cc123").build())
+                .isErrorMessageContainsTextInAlert("at least 8 character");
+    }
 
 }

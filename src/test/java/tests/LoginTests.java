@@ -3,6 +3,7 @@ package tests;
 import config.AppiumConfig;
 import models.Auth;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import screens.AuthenticationScreen;
 import screens.ContactListScreen;
@@ -30,5 +31,18 @@ public class LoginTests extends AppiumConfig {
                 .login(Auth.builder().email("423090@gmail.com").password("Yy12345$").build())
                 .isContactListActivityPresent();
         Assert.assertTrue(res);
+    }
+
+    @Test
+    public void loginNegativeWrongEmail(){
+        new AuthenticationScreen(driver)
+                .loginUnsuccessful(Auth.builder().email("423090gmail.com").password("Yy12345$").build())
+                .isErrorMessageContainsText("login or password incorrect");
+    }
+
+    @AfterMethod
+    public  void logoutFormSys(){
+        new ContactListScreen(driver)
+                .logout();
     }
 }

@@ -23,6 +23,14 @@ if(text !=null){
 }
     }
 
+    public void type2(AndroidElement element, String text){
+
+            element.click();
+            element.clear();
+            if(text !=null){element.sendKeys(text);  }
+        driver.hideKeyboard();
+    }
+
     public void pause(int time){
         try {
             Thread.sleep(time);
@@ -39,5 +47,19 @@ if(text !=null){
     public boolean isShouldHave(AndroidElement element,String text, int time){
     return new WebDriverWait(driver,time)
         .until(ExpectedConditions.textToBePresentInElement(element,text));
+    }
+
+    public void shouldHave(AndroidElement element,String text, int time){
+        new WebDriverWait(driver,time)
+                .until(ExpectedConditions.textToBePresentInElement(element,text));
+    }
+
+    public boolean isDisplayedWithExp(AndroidElement element){
+        try {
+            should(element, 5);
+            return element.isDisplayed();
+        }catch (Exception ex){
+            return false;
+        }
     }
 }
