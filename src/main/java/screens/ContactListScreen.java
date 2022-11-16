@@ -60,7 +60,6 @@ public class ContactListScreen extends BaseScreen {
     @FindBy(id = "com.sheygam.contactapp:id/emptyTxt")
     AndroidElement emptyText;
 
-
     public ContactListScreen assertContactListActivityPresent() {
         Assert.assertTrue(isContactListActivityPresent());
         return this;
@@ -186,22 +185,16 @@ public class ContactListScreen extends BaseScreen {
 
     public void removeAllContacts() {
 
-        while (contacts.size()!=0) {
+        while (contacts.size() != 0) {
             removeOneContact();
         }
 
-        public ContactListScreen assertNoContactsPresent() {
-            Assert.assertTrue(is);
-            return this;
-        }
-
-        public boolean isNoContactPresent() {
-            should(plusButton, 10);
-            return isShouldHave(emptyText, "No contacts here", 10);
-        }
     }
 
-
+public boolean isNoContactsPresent(){
+        should(emptyText,6);
+        return emptyText.isEnabled();
+}
 
 }
 

@@ -29,7 +29,7 @@ public class RemoveContactTests extends AppiumConfig {
     public void removeAllContacts() {
     new ContactListScreen(driver)
             .removeAllContacts();
-    Assert.assertTrue( new ContactListScreen().isNoContactHere());
+    Assert.assertTrue(new ContactListScreen(driver).isNoContactsPresent());
 
     }
 
